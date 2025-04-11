@@ -1,0 +1,15 @@
+@import (less) "../config.less";
+@import (less) "../colors.less";
+
+.section {
+  position: relative;
+
+  .space {
+    padding: 0 @space * 2;
+
+    @media @large {
+      padding-left: @space * 4;
+      padding-right: @space * 4;
+    }
+  }
+}

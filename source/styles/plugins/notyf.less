@@ -1,0 +1,23 @@
+@import (less) "../config.less";
+@import (less) "../colors.less";
+
+.notyf {
+  //width: 240px;
+  font-size: 16px;
+
+  .notyf__toast {
+    &.notyf--confirm {
+      background: @valencia;
+    }
+  }
+
+  .notyf__icon--confirm::after,
+  .notyf__icon--confirm::before {
+    background: @valencia;
+  }
+
+  .notyf__wrapper {
+    padding-left: @space * 2;
+    padding-right: @space * 2;
+  }
+}

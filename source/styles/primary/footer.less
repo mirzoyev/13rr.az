@@ -1,0 +1,32 @@
+@import (less) "../config.less";
+@import (less) "../colors.less";
+
+.footer {
+  position: fixed;
+  z-index: 1;
+  background: @windows;
+  box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+  color: @white;
+  bottom: 0;
+  width: 100%;
+  padding: @space * 4 @space * 2 @space * 4 + 1;
+
+  @media @large {
+    padding-left: @space * 4;
+    padding-right: @space * 4;
+  }
+
+  .container {
+
+  }
+
+  .icon {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 60px - @space * 8;
+  }
+
+  & + .content {
+    padding-top: 60px;
+  }
+}

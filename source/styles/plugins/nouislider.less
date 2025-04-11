@@ -1,0 +1,62 @@
+@import (less) "../config.less";
+@import (less) "../colors.less";
+
+.noUi-handle {
+  background: @cerulean;
+  border-radius: 50%;
+  box-shadow: none;
+  outline: none;
+
+  &:before {
+    display: none;
+  }
+
+  &:after {
+    display: none;
+  }
+}
+
+.noUi-connect {
+  background: @lima;
+}
+
+.noUi-horizontal {
+  //width: 240px;
+  height: 12px;
+
+  .noUi-handle {
+    //top: 20px;
+    right: -12px !important;
+    border-color: transparent;
+    //border: 1px solid @submarine;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.noUi-horizontal .noUi-tooltip {
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+  left: 50%;
+  bottom: 100%;
+}
+
+.noUi-target {
+  background: #fafafa;
+  border-radius: 2px;
+  border: 1px solid @submarine;
+  //border-width: 0;
+  box-shadow: none;
+}
+
+.noUi-tooltip {
+  display: block;
+  position: absolute;
+  border-color: transparent;
+  //border-radius: 3px;
+  background: transparent;
+  color: @cerulean;
+  //padding: 5px;
+  //outline: none;
+  text-align: center;
+}

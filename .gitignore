@@ -1,0 +1,10 @@
+/.idea
+/assets
+/source/fonts
+/source/composer.lock
+/source/node_modules
+/source/trash
+/templates
+/uploads
+/vendor
+/version.txt

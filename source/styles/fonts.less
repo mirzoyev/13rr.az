@@ -1,0 +1,36 @@
+@import (less) "config.less";
+
+.font-face(AZN, 400, 0, @path-fonts);
+.font-face(AZN, 700, 0, @path-fonts);
+.font-face(Lato, 400, 0, @path-fonts);
+.font-face(Lato, 500, 0, @path-fonts);
+.font-face(Lato, 600, 0, @path-fonts);
+.font-face(Lato, 700, 0, @path-fonts);
+.font-face(Icons, 400, 0, @path-fonts);
+.font-face(Social, 400, 0, @path-fonts);
+
+.font-face (@name, @size:400, @italic:0, @path:'') {
+  @font-face {
+    //font-display: swap;
+    font-family: @name;
+    font-style: normal;
+    font-weight: @size;
+    src:
+            url("@{path}/@{name}/@{size}.woff2?@{version}") format("woff2"),
+            url("@{path}/@{name}/@{size}.woff?@{version}") format("woff"),
+            url("@{path}/@{name}/@{size}.ttf?@{version}") format("truetype");
+  }
+
+  & when (@italic = 1) {
+    @font-face {
+      //font-display: swap;
+      font-family: @name;
+      font-style: italic;
+      font-weight: @size;
+      src:
+              url("@{path}/@{name}/@{size}i.woff2?@{version}") format("woff2"),
+              url("@{path}/@{name}/@{size}i.woff?@{version}") format("woff"),
+              url("@{path}/@{name}/@{size}i.ttf?@{version}") format("truetype");
+    }
+  }
+}

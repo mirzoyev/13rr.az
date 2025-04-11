@@ -1,0 +1,66 @@
+@import (less) "../config.less";
+
+.glide__slides {
+  align-items: center;
+
+  .glide__slide {
+
+  }
+}
+
+
+.glide__slide--active {
+  position: relative;
+  z-index: 1000;
+}
+
+
+.glide__arrows {
+  .glide__arrow {
+    //display: block;
+    //position: absolute;
+    //z-index: 10;
+    //top: 50%;
+    background: rgba(0, 0, 0, 0) no-repeat center;
+    background-size: 32px 32px;
+    border: none;
+    border-radius: 50%;
+    box-shadow: none;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+
+    opacity: 0.5;
+    //padding: @space;
+    //transform: translateY(-50%);
+    //transition: opacity .4s ease-in-out;
+
+    @media @medium {
+      background-size: 40px 40px;
+      width: 64px;
+      height: 64px;
+    }
+
+    &.glide__arrow--right {
+      right: @space * 4;
+
+      //background-image: none;
+      background-image: url('../@{path-icons}/next.svg');
+
+      @media @large {
+        right: @space * 4;
+      }
+    }
+
+    &.glide__arrow--left {
+      left: @space * 4;
+
+      //background-image: none;
+      background-image: url('../@{path-icons}/previous.svg');
+
+      @media @large {
+        left: @space * 8;
+      }
+    }
+  }
+}

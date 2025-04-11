@@ -1,0 +1,101 @@
+<!doctype html>
+<html class="root-<?=$website->entity?>" dir="ltr" lang="<?=$website->language?>" prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport">
+    <link href="/favicon.png" rel="icon" type="image/png">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="default" name="apple-mobile-web-app-status-bar-style">
+    <meta content="none" name="msapplication-config">
+    <link href="/assets/main.css?<?=VERSION?>" rel="stylesheet">
+    <title><?=$website->meta['title']?></title>
+    <meta content="<?=$website->meta['description']?>" name="description">
+    <meta content="no-cache, no-store, must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="Pragma">
+    <meta content="0" http-equiv="Expires">
+</head>
+<body class="background background-lines" data-version="<?=VERSION?>" id="up">
+<div class="slideout-panel_ slideout-panel-left_" id="panel_">
+    <div class="header">
+        <div class="container">
+            <ul class="navigation row row-around">
+                <li class="column column-auto">
+                    <i class="icon icon-home"></i>
+                </li>
+                <li class="column column-auto">
+                    <i class="icon icon-calendar"></i>
+                </li>
+                <li class="column column-auto">
+                    <i class="icon icon-filter"></i>
+                </li>
+                <li class="column column-auto">
+                    <i class="icon icon-gear"></i>
+                </li>
+                <li class="column column-auto">
+                    <i class="icon icon-exit"></i>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <main class="content">
+        <?=$html['main']?>
+    </main>
+    <div class="footer">
+        <div class="container">
+            <div class="js-expand-button" data-expand="footer_date">
+                <div class="maindate align-center">
+<?php
+$now = time();
+$yesterday = $now - 60 * 60 * 24;
+$timeFrom = $yesterday;
+//echo $timeFrom;
+//echo '<br>';
+if (isset($_COOKIE['dateFromUnix'])) {
+    $timeFrom = $_COOKIE['dateFromUnix'] / 1000 + 60 * 60 * 4;
+}
+echo '<span class="dateFromHuman">';
+echo date('F j, Y', $timeFrom);
+echo '</span>';
+echo ' - ';
+
+$timeTo = $now;
+if (isset($_COOKIE['dateToUnix'])) {
+    $timeTo = $_COOKIE['dateToUnix'] / 1000 + 60 * 60 * 4;
+}
+echo '<span class="dateToHuman">';
+echo date('F j, Y', $timeTo);
+echo '</span>';
+?>
+                </div>
+            </div>
+        </div>
+        <div class="js-expand-content" data-expand="footer_date_">
+            <div class="align-center">
+                <div class="gap gap-2"></div>
+                <button class="button filter filter-current js-filter js-filter-day">Today</button>
+                <button class="button filter js-filter js-filter-week">This Week</button>
+                <button class="button filter js-filter js-filter-month">This Month</button>
+                <div class="gap gap-2"></div>
+                <div class="row row-center">
+                    <div class="column">
+                        <div class="inputbox align-left">
+                            From:<br>
+                            <input class="date js-date-from" value="">
+                        </div>
+                    </div>
+                    <div class="column align-left">
+                        <div class="inputbox align-left">
+                            To:<br>
+                            <input class="date js-date-to" value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="preloader" class="preloader"></div>
+<script src="/assets/main.js?<?=VERSION?>"></script>
+</body>
+</html>

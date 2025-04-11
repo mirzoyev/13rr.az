@@ -1,0 +1,43 @@
+@import (less) "config.less";
+
+@path-flags: '../flags';
+
+.flag, .flag-text {
+  vertical-align: baseline;
+}
+
+.flag {
+  display: inline-block;
+  position: relative;
+  transform: translateY(-1px);
+  vertical-align: middle;
+  width: 26px;
+  height: 26px;
+  background-size: 26px 26px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.flag-az {
+  background-image: url("@{path-flags}/az.svg");
+}
+
+.flag-en {
+  background-image: url("@{path-flags}/en.svg");
+}
+
+.flag-ru {
+  background-image: url("@{path-flags}/ru.svg");
+}
+
+.flag-tr {
+  background-image: url("@{path-flags}/tr.svg");
+  width: 30px;
+  height: 20px;
+  background-size: 30px 20px;
+  border-radius: 3px;
+}
+
+.flag-text {
+  margin-left: @space * 1.5;
+}

@@ -1,0 +1,31 @@
+@import (less) "../config.less";
+@import (less) "../colors.less";
+
+.timebutton {
+  position: absolute;
+  cursor: pointer;
+  width: 48px;
+  bottom: 0;
+  top: 0;
+  //left: 0;
+  text-align: center;
+  z-index: 1000;
+
+  .icon {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &::before {
+      color: white;
+    }
+  }
+
+  &.timebutton-left {
+    left: 0;
+  }
+
+  &.timebutton-right {
+    right: 0;
+  }
+}

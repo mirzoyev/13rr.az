@@ -1,0 +1,25 @@
+@import (less) "../config.less";
+@import (less) "../colors.less";
+
+.lg {
+  .lg-thumb {
+    margin: auto;
+
+    .lg-thumb-item {
+      border: @space / 2 solid @white;
+      border-radius: 0;
+      //transform: scale(0.9);
+      //transition: all 0.4s ease-in-out;
+
+      &.active,
+      &:hover {
+        border-color: @te-papa-green;
+        //transform: scale(1);
+      }
+    }
+  }
+}
+
+.lg-counter {
+  display: none;
+}

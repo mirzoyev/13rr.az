@@ -1,0 +1,21 @@
+@import (less) "config.less";
+@import (less) "colors.less";
+
+@path-backgrounds: '../backgrounds';
+@path-icons: '../icons';
+@path-images: '/images';
+
+.background {
+  &.background-lines {
+    background-image: url('@{path-backgrounds}/lines.png');
+  }
+}
+
+main {
+  .background {
+    .container {
+      //background: @white;
+      background: #FBFBFB;//gtmetrix
+    }
+  }
+}
