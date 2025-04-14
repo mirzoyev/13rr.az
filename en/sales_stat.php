@@ -2,9 +2,9 @@
 include_once '../inc/predoc.php';
 include_once '../inc/filter_get.php';
 
-$r = 1001962;
+$r = 0;
 if ($_GET['restaurant_id']) {
- $r = $_GET['restaurant_id'];
+    $r = $_GET['restaurant_id'];
 }
 
 if ($r) {
@@ -20,14 +20,14 @@ include_once '../inc/header.php';
 
 $dbh = db_connect();
 
-$d1 = 2020;
-$d2 = 2025;
+//$d1 = 2020;
+//$d2 = 2025;
 
 echo "<h1>Sales statistics</h1>";
 echo "<h3>from: $d1 till: $d2 $r_name</h3>";
 
 $drspm_rs = $dbh->prepare("execute dbo.rep_stat_per_month :usr, :d1, :d2, :r");
-$drspm_rs->bindParam(":usr", $usr, PDO::PARAM_INT, 0);
+$drspm_rs->bindParam(":usr", $user_id, PDO::PARAM_INT, 0);
 $drspm_rs->bindParam(":d1", $d1, PDO::PARAM_STR, 0);
 $drspm_rs->bindParam(":d2", $d2, PDO::PARAM_STR, 0);
 $drspm_rs->bindParam(":r", $r, PDO::PARAM_INT, 0);
@@ -35,7 +35,9 @@ $drspm_rs->execute();
 if ($dbh->errorCode() == "00000") {
  echo "<table>";
  echo "<tr><th>restaurant_name</th><th>restaurant</th><th>y</th><th>m</th><th>tables</th><th>guestscount</th><th>pricesum</th><th>paysum</th><th>quantity</th><th>discounts</th><th>charges</th><th>complimentary</th></tr>";
- while ($drspm_r = $drspm_rs->fetchObject()) {
+
+    //print_r($drspm_rs->fetchObject());
+    while ($drspm_r = $drspm_rs->fetchObject()) {
   echo "<tr>";
   echo "<td>".$drspm_r->restaurant_name."</td>";
   echo "<td>".$drspm_r->restaurant."</td>";

@@ -95,8 +95,8 @@ $loc = [
         'time_reload' => 'Обновить'
     ],
     'az' => [
-        'avg_bill' => 'Orta chek',
-        'by_amount' => 'Top 10 mebleg',
+        'avg_bill' => 'Orta çek',
+        'by_amount' => 'Top 10 məbləg',
         'boy_by_amount' => 'Top 10 oficiant',
         'compl' => 'Kompliment',
         'previous' => 'Evvelki',

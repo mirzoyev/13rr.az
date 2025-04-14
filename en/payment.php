@@ -41,10 +41,15 @@ include_once '../inc/header.php';
 //echo '<h1>Payments by type</h1>';
 //echo '<h3>from: $d1 till: $d2 $r_name</h3>';
 
+$graph_id = 'payment';
+if (isset($_GET['graph_id'])) {
+    $graph_id = $_GET['graph_id'];
+}
+
 $graph = [
     'names' => [],
     'results' => [],
-    'title' => '&nbsp;' . $loc[$language]['table_payment'] . ' (%)'
+    'title' => '&nbsp;' . $loc[$language]['table_' . $graph_id] . ' (%)'
 ];
 
 echo '<div class="index section background background-index">';
@@ -82,17 +87,25 @@ echo '</th>';
 //echo '</th>';
 if (!$mobile) {
     echo '<th>';
+    echo '<a href="payment.php?restaurant_id=' . $r . '&graph_id=amount">';
     echo $loc[$language]['table_amount'];
+    echo '</a>';
     echo '</th>';
     echo '<th>';
+    echo '<a href="payment.php?restaurant_id=' . $r . '&graph_id=discount">';
     echo $loc[$language]['table_discount'];
+    echo '</a>';
     echo '</th>';
     echo '<th>';
+    echo '<a href="payment.php?restaurant_id=' . $r . '&graph_id=charge">';
     echo $loc[$language]['table_charge'];
+    echo '</a>';
     echo '</th>';
 }
 echo '<th>';
+echo '<a href="payment.php?restaurant_id=' . $r . '&graph_id=payment">';
 echo $loc[$language]['table_payment'];
+echo '</a>';
 echo '</th>';
 echo '</tr>';
 echo '</thead>';
@@ -177,19 +190,26 @@ if ($dbh->errorCode() == '00000') {
             //echo '<tr><td colspan="5" class="block_description">' . $drsbc_r->currency_type . '</td></tr>';
 
             if ($x) {
+                $table_data = [
+                    'amount' => my_money($a),
+                    'discount' => my_money($d),
+                    'charge' => my_money($c),
+                    'payment' => my_money($p)
+                ];
+
                 echo '<tr class="semifooter">';
                 //echo '<td>subtotal:</td>';
                 echo '<td class="js-expandtr-button" data-expandtr="test_' . $temp_id . '">' . $temp_currency . '</td>';
                 //echo '<td class="numeric">' . my_number($q, 2) . '</td>';
                 if (!$mobile) {
-                    echo '<td class="numeric">' . my_money($a) . '</td>';
-                    echo '<td class="numeric">' . my_money($d) . '</td>';
-                    echo '<td class="numeric">' . my_money($c) . '</td>';
+                    echo '<td class="numeric">' . $table_data['amount'] . '</td>';
+                    echo '<td class="numeric">' . $table_data['discount'] . '</td>';
+                    echo '<td class="numeric">' . $table_data['charge'] . '</td>';
                 }
-                echo '<td class="numeric">' . my_money($p) . '</td>';
+                echo '<td class="numeric">' . $table_data['payment'] . '</td>';
                 echo '</tr>';
 
-                $rounded_number = my_money($p);
+                $rounded_number = $table_data[$graph_id];
                 $rounded_number = str_replace(',', '', $rounded_number);
                 //$rounded_number = str_replace('.', ',', $rounded_number);
                 $rounded_number = round($rounded_number);
@@ -239,19 +259,27 @@ if ($dbh->errorCode() == '00000') {
     }
     if ($q) {
         //last?
+
+        $table_data = [
+            'amount' => my_money($a),
+            'discount' => my_money($d),
+            'charge' => my_money($c),
+            'payment' => my_money($p)
+        ];
+
         echo '<tr class="semifooter">';
         echo '<td class="js-expandtr-button" data-expandtr="test_' . $temp_id . '">' . $temp_currency . ':</td>';
         //echo '<td>subtotal:</td>';
         //echo '<td class="numeric">' . my_number($q, 2) . '</td>';
         if (!$mobile) {
-            echo '<td class="numeric">' . my_money($a) . '</td>';
-            echo '<td class="numeric">' . my_money($d) . '</td>';
-            echo '<td class="numeric">' . my_money($c) . '</td>';
+            echo '<td class="numeric">' . $table_data['amount'] . '</td>';
+            echo '<td class="numeric">' . $table_data['discount'] . '</td>';
+            echo '<td class="numeric">' . $table_data['charge'] . '</td>';
         }
-        echo '<td class="numeric">' . my_money($p) . '</td>';
+        echo '<td class="numeric">' . $table_data['payment'] . '</td>';
         echo '</tr>';
 
-        $rounded_number = my_money($p);
+        $rounded_number = $table_data[$graph_id];
         $rounded_number = str_replace(',', '', $rounded_number);
         //$rounded_number = str_replace('.', ',', $rounded_number);
         $rounded_number = round($rounded_number);
@@ -300,7 +328,11 @@ if (!empty($graph['results'])) {
     $graph_sum = array_sum($graph['results']);
     $graph['percents'] = [];
     foreach ($graph['results'] as $result) {
-        $graph['percents'][] = my_number(($result / $graph_sum) * 100, 2) . '';
+        if ($graph_sum) {
+            $graph['percents'][] = my_number(($result / $graph_sum) * 100, 2) . '';
+        } else {
+            $graph['percents'][] = 0;
+        }
     }
 
     echo '<div class="index section background background-index">';
@@ -310,7 +342,7 @@ if (!empty($graph['results'])) {
     echo '<div class="row row-center row-wrap">';
     echo '<div class="column column-1">';
     echo '<div class="gap gap-4"></div>';
-    echo '<h5>' . $loc[$language]['graph'] . '</h5>';
+    echo '<h5>' . $loc[$language]['graph'] . ': ' . $loc[$language]['table_' . $graph_id] . '</h5>';
     echo '<div class="gap gap-2"></div>';
 
     echo '<div class="row row-center">';

@@ -15,10 +15,15 @@ include_once '../inc/header.php';
 //include_once 'inc/filter.php';
 //test
 
+$graph_id = 'payment';
+if (isset($_GET['graph_id'])) {
+    $graph_id = $_GET['graph_id'];
+}
+
 $graph = [
     'names' => [],
     'results' => [],
-    'title' => '&nbsp;' . $loc[$language]['table_payment'] . ' (%)'
+    'title' => '&nbsp;' . $loc[$language]['table_' . $graph_id] . ' (%)'
 ];
 
 echo '<div class="index section background background-index">';
@@ -56,28 +61,46 @@ echo '<th>';
 echo $loc[$language]['table_restaurant'];
 echo '</th>';
 echo '<th>';
+echo '<a href="index.php?graph_id=guests">';
 echo $loc[$language]['table_guests'];
+echo '</a>';
 echo '</th>';
 if (!$mobile) {
     echo '<th>';
-    echo $loc[$language]['avg_bill'];
+    echo '<a href="index.php?graph_id=avg_bill">';
+    //temp table_name_fix
+    $loc[$language]['table_avg_bill'] = $loc[$language]['avg_bill'];
+    echo $loc[$language]['table_avg_bill'];
+    echo '</a>';
     echo '</th>';
     echo '<th>';
+    echo '<a href="index.php?graph_id=amount">';
     echo $loc[$language]['table_amount'];
+    echo '</a>';
     echo '</th>';
     echo '<th>';
+    echo '<a href="index.php?graph_id=discount">';
     echo $loc[$language]['table_discount'];
+    echo '</a>';
     echo '</th>';
     echo '<th>';
+    echo '<a href="index.php?graph_id=charge">';
     echo $loc[$language]['table_charge'];
+    echo '</a>';
     echo '</th>';
 }
 echo '<th>';
+echo '<a href="index.php?graph_id=payment">';
 echo $loc[$language]['table_payment'];
+echo '</a>';
 echo '</th>';
 if (!$mobile) {
     echo '<th>';
+    echo '<a href="index.php?graph_id=complimentary">';
+    //temp table_name_fix
+    $loc[$language]['table_complimentary'] = $loc[$language]['compl'];
     echo $loc[$language]['compl'];
+    echo '</a>';
     echo '</th>';
 }
 echo '</tr>';
@@ -131,33 +154,43 @@ if ($dbh->errorCode() == "00000") {
         $restaurant_name = ucwords(strtolower($drvs_r->restaurant));
         $restaurant_results = my_money($drvs_r->paysum);
 
+        //print_r($drvs_r);
+        $table_data = [
+            'guests' => $drvs_r->guestscount,
+            'avg_bill' => my_money($drvs_r->avg_price),
+            'amount' => my_money($drvs_r->pricesum),
+            'discount' => my_money($drvs_r->discounts),
+            'charge' => my_money($drvs_r->charges),
+            'payment' => my_money($drvs_r->paysum),
+            'complimentary' => my_money($drvs_r->complimentary)
+        ];
         echo '<tr>';
         echo '<td>';
         echo '<a href="restaurant.php?restaurant_id=' . $drvs_r->r_id . '">' . $restaurant_name . '</a>';
         echo '</td>';
         echo '<td>';
-        echo $drvs_r->guestscount;
+        echo $table_data['guests'];
         echo '</td>';
         if (!$mobile) {
             echo '<td>';
-            echo my_money($drvs_r->avg_price);
+            echo $table_data['avg_bill'];
             echo '</td>';
             echo '<td>';
-            echo my_money($drvs_r->pricesum);
+            echo $table_data['amount'];
             echo '</td>';
             echo '<td>';
-            echo my_money($drvs_r->discounts);
+            echo $table_data['discount'];
             echo '</td>';
             echo '<td>';
-            echo my_money($drvs_r->charges);
+            echo $table_data['charge'];
             echo '</td>';
         }
         echo '<td>';
-        echo $restaurant_results;
+        echo $table_data['payment'];
         echo '</td>';
         if (!$mobile) {
             echo '<td>';
-            echo my_money($drvs_r->complimentary);
+            echo $table_data['complimentary'];
             echo '</td>';
         }
         echo '</tr>';
@@ -165,7 +198,7 @@ if ($dbh->errorCode() == "00000") {
         $graph_restaurant_name = str_replace('\'', '', $restaurant_name);
         $graph['names'][] = $graph_restaurant_name;
 
-        $rounded_number = $restaurant_results;
+        $rounded_number = $table_data[$graph_id];
         $rounded_number = str_replace(',', '', $rounded_number);
         //$rounded_number = str_replace('.', ',', $rounded_number);
         $rounded_number = round($rounded_number);
@@ -287,7 +320,11 @@ if (!empty($graph['results'])) {
     $graph_sum = array_sum($graph['results']);
     $graph['percents'] = [];
     foreach ($graph['results'] as $result) {
-        $graph['percents'][] = my_number(($result / $graph_sum) * 100, 2) . '';
+        if ($graph_sum) {
+            $graph['percents'][] = my_number(($result / $graph_sum) * 100, 2) . '';
+        } else {
+            $graph['percents'][] = 0;
+        }
     }
     //print_r($graph);
 
@@ -298,7 +335,7 @@ if (!empty($graph['results'])) {
     echo '<div class="row row-center row-wrap">';
     echo '<div class="column column-1">';
     echo '<div class="gap gap-4"></div>';
-    echo '<h5>' . $loc[$language]['graph'] . '</h5>';
+    echo '<h5>' . $loc[$language]['graph'] . ': ' . $loc[$language]['table_' . $graph_id] . '</h5>';
     echo '<div class="gap gap-2"></div>';
 
     echo '<div class="row row-center">';
