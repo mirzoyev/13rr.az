@@ -162,7 +162,8 @@ if ($dbh->errorCode() == "00000") {
         }
         echo '</tr>';
 
-        $graph['names'][] = $restaurant_name;
+        $graph_restaurant_name = str_replace('\'', '', $restaurant_name);
+        $graph['names'][] = $graph_restaurant_name;
 
         $rounded_number = $restaurant_results;
         $rounded_number = str_replace(',', '', $rounded_number);

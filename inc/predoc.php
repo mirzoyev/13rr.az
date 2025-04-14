@@ -1,5 +1,5 @@
 <?php
-if ($_SERVER['REMOTE_ADDR'] === '94.20.67.47') {
+if ($_SERVER['REMOTE_ADDR'] === '91.201.42.81') {
     define('DEBUG', true);
 } else {
     define('DEBUG', false);

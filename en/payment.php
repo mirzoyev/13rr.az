@@ -195,7 +195,9 @@ if ($dbh->errorCode() == '00000') {
                 $rounded_number = round($rounded_number);
 
                 $graph['results'][] = $rounded_number;
-                $graph['names'][] = $temp_currency;
+
+                $graph_name = str_replace('\'', '', $temp_currency);
+                $graph['names'][] = $graph_name;
 
                 $temp_currency = $drsbc_r->currency_type;
                 $temp_id++;

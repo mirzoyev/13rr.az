@@ -6,7 +6,7 @@ $dbc_gl = 0;
 function db_connect() {
  global $dbh_gl;
  global $dbc_gl;
- if(!$dbh_gl) $dbh_gl = new PDO("dblib:host=10.0.24.230;dbname=inno_report;charset=UTF-8", "sa", "Rkeeper123");
+ if(!$dbh_gl) $dbh_gl = new PDO("dblib:host=94.20.48.50:51433;dbname=inno_report;charset=UTF-8;version=8.0", "blackSA", "Roma@2025!");
  $dbc_gl++;
  return $dbh_gl;
 }
