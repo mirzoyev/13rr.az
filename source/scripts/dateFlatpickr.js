@@ -58,6 +58,7 @@ let $filters = document.getElementsByClassName('js-filter');
 let $filterDay = document.querySelector('.js-filter-day');
 let $filterWeek = document.querySelector('.js-filter-week');
 let $filterMonth = document.querySelector('.js-filter-month');
+let $filterYear = document.querySelector('.js-filter-year');
 
 let $periodPrev = document.querySelector('.js-period-prev');
 let $periodNext = document.querySelector('.js-period-next');
@@ -67,21 +68,39 @@ let bakuhours = 60 * 60 * 5 * 1000;
 //const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-function getFirstDayOfLastMonth(yourDate) {
-    //current month  + 1
-    return new Date(yourDate.getFullYear(), yourDate.getMonth() - 1 + 1, 1);
-}
-
-function getLastDayOfLastMonth(yourDate) {
-    //current month  + 1
+function getLastDayOfLastMonth_remove(yourDate) {
+    // hachy way of substracting 12 hours from the next month
     yourDate.setMonth(yourDate.getMonth() + 1);
     yourDate.setDate(1);
     yourDate.setHours(-12);
     return yourDate;
 }
 
+function getFirstDayOfLastYear(yourDate) {
+    // suggested by AI
+    // month 0 = January
+    return new Date(yourDate.getFullYear(), 0, 1);
+}
+
+function getLastDayOfLastYear(yourDate) {
+    // suggested by AI
+    // month 0 = January
+    return new Date(yourDate.getFullYear(), 11, 31);
+}
+
+function getFirstDayOfLastMonth(yourDate) {
+    // current month is 0 (-1 + 1)
+    return new Date(yourDate.getFullYear(), yourDate.getMonth() - 1 + 1, 1);
+}
+
+function getLastDayOfLastMonth(yourDate) {
+    // suggested by AI
+    // 0 means minus one day
+    return new Date(yourDate.getFullYear(), yourDate.getMonth() + 1, 0);
+}
+
 function getFirstDayOfLastWeek() {
-    //current week  + 7
+    //current week + 7
     const now = new Date();
     const dayOfWeek = now.getDay(); // Sunday - 0, Monday - 1, etc.
     const diffToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // If today is Sunday, diff to last Monday is 6 days
@@ -278,6 +297,27 @@ if ($dateFrom && $dateTo && $dateFromPrev && $dateToPrev && $periodPrev && $peri
 
         hideShowHumanDate(dateMonthFromString, dateMonthToString);
 
+        changePrevDates(calendarToPrev, calendarFromPrev);
+    }, false);
+
+    $filterYear.addEventListener('click', function (event) {
+        Cookies.set('period', 365, {path: '/'});
+
+        let dateFrom_Class = getFirstDayOfLastYear(new Date());
+        let dateFrom_Unix = dateFrom_Class.getTime();
+        Cookies.set('dateFromUnix', dateFrom_Unix, {path: '/'});
+        let dateFrom_String = months[dateFrom_Class.getMonth()] + ' ' + dateFrom_Class.getDate() + ', ' + dateFrom_Class.getFullYear();
+        $dateFromHuman.innerText = dateFrom_String;
+        calendarFrom.setDate(dateFrom_Class);
+
+        let dateTo_Class = getLastDayOfLastYear(new Date());
+        let dateTo_Unix = dateTo_Class.getTime();
+        Cookies.set('dateToUnix', dateTo_Unix, {path: '/'});
+        let dateTo_String = months[dateTo_Class.getMonth()] + ' ' + dateTo_Class.getDate() + ', ' + dateTo_Class.getFullYear();
+        $dateToHuman.innerText = dateTo_String;
+        calendarTo.setDate(dateTo_Class);
+
+        hideShowHumanDate(dateFrom_String, dateTo_String);
         changePrevDates(calendarToPrev, calendarFromPrev);
     }, false);
 

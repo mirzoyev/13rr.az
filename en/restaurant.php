@@ -425,4 +425,3 @@ if (!empty($graph['results'])) {
 db_close();
 
 include_once '../inc/footer.php';
-?>

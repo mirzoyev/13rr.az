@@ -13,7 +13,6 @@ include_once '../inc/header.php';
 
 //include_once 'inc/main.php';
 //include_once 'inc/filter.php';
-//test
 
 $graph_id = 'payment';
 if (isset($_GET['graph_id'])) {
@@ -164,6 +163,7 @@ if ($dbh->errorCode() == "00000") {
             'payment' => my_money($drvs_r->paysum),
             'complimentary' => my_money($drvs_r->complimentary)
         ];
+
         echo '<tr>';
         echo '<td>';
         echo '<a href="restaurant.php?restaurant_id=' . $drvs_r->r_id . '">' . $restaurant_name . '</a>';

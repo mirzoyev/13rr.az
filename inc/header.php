@@ -46,6 +46,7 @@ $loc = [
         'time_day' => 'Yesterday',
         'time_week' => 'Week',
         'time_month' => 'Month',
+        'time_year' => 'Year',
         'time_reload' => 'Reload'
     ],
     'ru' => [
@@ -92,6 +93,7 @@ $loc = [
         'time_day' => 'Вчера',
         'time_week' => 'Неделя',
         'time_month' => 'Месяц',
+        'time_year' => 'Год',
         'time_reload' => 'Обновить'
     ],
     'az' => [
@@ -138,6 +140,7 @@ $loc = [
         'time_day' => 'Dünən',
         'time_week' => 'Həftə',
         'time_month' => 'Ay',
+        'time_year' => 'İl',
         'time_reload' => 'Reload'
     ]
 ];
@@ -153,15 +156,14 @@ if (isset($_COOKIE['interface'])) {
     $mobile = $_COOKIE['interface'];
 }
 
+//magic 6 hours
 $baku = 60 * 60 * 5;
 
 $now = time();
 $timeFrom = $now;
 if (isset($_COOKIE['dateFromUnix'])) {
     $timeFrom = intval($_COOKIE['dateFromUnix'] / 1000);
-    //???
 }
-//???
 $timeFrom = $timeFrom + $baku;
 
 $timeTo = $now;
@@ -196,6 +198,11 @@ if (isset($_COOKIE['period'])) {
 //$timePrevFrom = $timeFrom;
 //$timePrevTo = $timeTo;
 
+$prevYearStart = strtotime('first day of january previous year', $timeFrom);
+$prevYearEnd = strtotime('last day of december previous year', $timeFrom);
+$nextYearStart = strtotime('first day of january next year', $timeFrom);
+$nextYearEnd = strtotime('last day of december next year', $timeFrom);
+
 $prevMonthStart = strtotime('first day of previous month', $timeFrom);
 $prevMonthEnd = strtotime('last day of previous month', $timeFrom);
 $nextMonthStart = strtotime('first day of next month', $timeFrom);
@@ -209,7 +216,12 @@ $nextWeekEnd = strtotime('sunday next week', $timeFrom);
 $prevDay = strtotime('yesterday', $timeFrom);
 $nextDay = strtotime('tomorrow', $timeFrom);
 
-if ($period == 30) {
+if ($period == 365) {
+    $timePrevFrom = $prevYearStart;
+    $timePrevTo = $prevYearEnd;
+    $timeNextFrom = $nextYearStart;
+    $timeNextTo = $nextYearEnd;
+} elseif ($period == 30) {
     $timePrevFrom = $prevMonthStart;
     $timePrevTo = $prevMonthEnd;
     $timeNextFrom = $nextMonthStart;

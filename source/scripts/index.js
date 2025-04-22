@@ -3,7 +3,9 @@
 
 import './checkVersion';
 import './dateFlatpickr';
-import './infographicChart';
+import './pieChart';
+import './barChart';
+import './lineChart';
 import './expand';
 import './expandTable';
 import './languageSwitch';

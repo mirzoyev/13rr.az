@@ -1,10 +1,10 @@
 import Chart from "chart.js/auto";
 
-// Pie Chart
-// https://www.chartjs.org/docs/latest/charts/doughnut.html#pie
-const ctx = document.getElementById('myChart');
+// Bar Chart
+// https://www.chartjs.org/docs/latest/charts/bar.html
+const ctx = document.getElementById('barChart');
 
-let backgroundColors = ['#ef476f', '#fb8500', '#ffb703', '#06d6a0', '#00b4d8', '#0077b6', '#8338ec', '#606c38', '#8f2d56', '#38b000'];
+let backgroundColors = ['#ef476f', '#fb8500', '#ffb703', '#06d6a0', '#00b4d8', '#0077b6'];
 //let borderColors = backgroundColors;
 
 if (ctx) {
@@ -22,13 +22,14 @@ if (ctx) {
         }
 
         new Chart(ctx, {
-            type: 'pie',
+            type: 'bar',
             data: {
                 labels: graphData['names'],
                 datasets: [{
                     label: graphData['title'],
                     data: resultsData,
                     backgroundColor: backgroundColors,
+                    //borderColor: borderColors,
                     borderWidth: 1
                 }]
             },

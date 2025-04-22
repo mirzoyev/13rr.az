@@ -40,6 +40,7 @@ if (!isset($login_page)) {
                 <button class="button filter filter-current js-filter js-filter-day"><?= $loc[$language2]['time_day'] ?></button>
                 <button class="button filter js-filter js-filter-week"><?= $loc[$language2]['time_week'] ?></button>
                 <button class="button filter js-filter js-filter-month"><?= $loc[$language2]['time_month'] ?></button>
+                <button class="button filter js-filter js-filter-year"><?= $loc[$language2]['time_year'] ?></button>
                 <div class="gap gap-2"></div>
                 <div class="row row-center">
                     <div class="column">
